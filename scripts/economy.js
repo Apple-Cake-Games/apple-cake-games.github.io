@@ -10,7 +10,7 @@ const SKINS = {
 
 const MAPS = {
     '790ß23170ß712ß07124': { name: 'Moon', price: 0, img: "/assets/gameelements/background.png" },
-    '3247902347902347902': { name: 'Red Mars', price: 150, img: '/assets/gameelements/ui/maps/mars_bg.png' }
+    '3247902347902347902': { name: 'Green Fields', price: 750, img: '/assets/gameelements/ui/maps/Green_Fields.png' }
 };
 
 const DEFAULT_MAP_ID = '790ß23170ß712ß07124';
