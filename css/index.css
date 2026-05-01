@@ -143,6 +143,8 @@ header h1 {
     transition: color 0.3s ease;
     color: white;
     text-align: center;
+    margin-top: 20px;
+    font-size: 70px;
 }
  
 .information {
