@@ -5,37 +5,21 @@
 }
 
 body{
-    background-color: black;
+    background-image: url(/assets/gameelements/ui/background.png);
 }
 
 
-
-.bitcount-single-ink-pixel {
-    font-family: "Bitcount Single Ink", system-ui;
-    font-optical-sizing: auto;
-    font-weight: 450;
-    font-style: normal;
-    font-variation-settings:
-        "slnt" 0,
-        "CRSV" 0.5,
-        "ELSH" 0,
-        "ELXP" 0,
-        "SZP1" 0,
-        "SZP2" 0,
-        "XPN1" 0,
-        "XPN2" 0,
-        "YPN1" 0,
-        "YPN2" 0;
-}
 
 .information {
     color: white;
 }
 
 header {
-    font-family: "Bitcount Single Ink";
-    font-size: 50px;
+    font-family: sans-serif;
+    font-size:50px;
     transition: color 0.3s ease;
+    color: white;
+    text-align: center;
 }
 
 
@@ -62,7 +46,7 @@ header {
     color: white;
     border: none;
     padding: 16px 32px;
-    font-family: "Bitcount Single Ink", sans-serif;
+    font-family: sans-serif;
     font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;

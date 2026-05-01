@@ -66,19 +66,27 @@ function playSound(audioObj) {
     }
 
         // Funktion zum Spawnen des Schildes (ähnlich wie Kristall, aber seltener)
-    function spawnShield() {
-        if (gameOver || document.querySelector('.shield')) return;
-        
-        const shield = document.createElement('div');
-        shield.className = 'shield';
-        shield.style.cssText = "position:absolute; width:40px; height:40px; background:yellow; border-radius:50%; box-shadow:0 0 15px yellow;";
-        shield.style.left = Math.random() * (window.innerWidth - 40) + 'px';
-        shield.style.top = Math.random() * (window.innerHeight - 40) + 'px';
-        gameContainer.appendChild(shield);
+function spawnShield() {
+    if (gameOver || document.querySelector('.shield')) return;
+    
+    const shield = document.createElement('div');
+    shield.className = 'shield'; // Hier wird die CSS-Klasse zugewiesen
+    
+    // Position berechnen
+    const x = Math.random() * (window.innerWidth - 40);
+    const y = Math.random() * (window.innerHeight - 40);
+    
+    shield.style.left = x + 'px';
+    shield.style.top = y + 'px';
+    
+    gameContainer.appendChild(shield);
 
-        // Schild verschwindet nach 7 Sekunden, wenn nicht gesammelt
-        setTimeout(() => { if(shield.parentElement) shield.remove(); }, 7000);
-    }
+    // Schild verschwindet nach 7 Sekunden, wenn nicht gesammelt
+    setTimeout(() => { 
+        if(shield.parentElement) shield.remove(); 
+    }, 17000);
+}
+
 
     function saveScore(newPoints) {
         let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];

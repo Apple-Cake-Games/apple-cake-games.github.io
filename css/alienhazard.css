@@ -109,6 +109,20 @@ image-rendering: crisp-edges;
             background-size: 44px 44px;
             image-rendering: pixelated;
         }
+
+
+.shield {
+    position: absolute;
+    width: 40px; 
+    height: 40px;
+    background-image: url("/assets/gameelements/shield.png"); /* Pfad zu deinem Bild */
+    background-size: contain;
+    background-repeat: no-repeat;
+    image-rendering: pixelated; /* Wichtig für den Pixel-Look! */
+    z-index: 5;
+}
+
+
         #game-over-screen {
     display: none; /* Erst versteckt */
     position: absolute;
