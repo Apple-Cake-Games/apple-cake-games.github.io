@@ -11,8 +11,15 @@ btnplay.addEventListener("click", function(){
 });
 
 btnGit.addEventListener("click", function(){
-    window.open("https://github.com/Apple-Cake-Games/apple-cake-games.github.io", "_self");
-})
+    window.open("https://github.com/Apple-Cake-Games/apple-cake-games.github.io");
+    const hasBonus = localStorage.getItem('bonus_github_claimed');
+
+    if (!hasBonus) {
+        alert("Thank you for opening our GitHub-Profile! You've got a free skin!");
+        unlockSkin("32479023479023479023ß12370ß92134709ß2144"); 
+        localStorage.setItem('bonus_github_claimed', 'true');
+    }
+});
 
 btnShop.addEventListener("click", function(){
     openShop();

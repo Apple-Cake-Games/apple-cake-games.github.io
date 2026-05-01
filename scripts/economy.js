@@ -6,6 +6,7 @@ const SKINS = {
     '4376891235609812368586089216358902163553': { name: 'Pink Alien', price: 100, img: '../assets/gameelements/skins/pink.png' },
     '7853201750213568126539062130981236508213': { name: 'Void UFO', price: 200, img: '../assets/gameelements/skins/void.png' },
     '7012865092165309812658906523906529106210': { name: 'Gold UFO', price: 500, img: '../assets/gameelements/skins/gold.png' },
+    '32479023479023479023ß12370ß92134709ß2144': { name: 'AppleCakeGameSpecial', price: 10000, img: '../assets/gameelements/skins/AppleCakeGamesSpecial.png' }
 };
 
 const MAPS = {
@@ -34,7 +35,24 @@ function loadEquippedMap() {
     }
 }
 
+function unlockSkin(skinId) {
+    // 1. Liste der besessenen Skins holen
+    let ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
 
+    // 2. Prüfen, ob der Skin schon da ist
+    if (!ownedSkins.includes(skinId)) {
+        ownedSkins.push(skinId);
+        localStorage.setItem('owned_skins', JSON.stringify(ownedSkins));
+        alert("Glückwunsch! Skin freigeschaltet.");
+    } else {
+        alert("Diesen Skin hast du schon!");
+    }
+
+    // 3. Shop-Anzeige sofort updaten, falls er offen ist
+    if (typeof renderShop === "function") {
+        renderShop();
+    }
+}
 
 // --- CORE SYSTEM ---
 function createHash(value) {
