@@ -163,115 +163,46 @@ header h1 {
     line-height: 1.5;
 }
 
-#btnPlay {
+/* 1. Gemeinsame Regeln für ALLE Menü-Buttons */
+#btnPlay, #btnShop, #btnStats, #btnCredits, #btnQuit {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px; 
-    height: 80px;
-    background-image: url("../assets/gameelements/ui/Play.png");
+    margin: 0 auto 10px auto; /* Zentriert, unten 10px Abstand */
+    width: 350px;             /* Einheitliche Breite für alle */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    margin-bottom: 15px;
     image-rendering: pixelated;
+    transition: transform 0.1s ease;
+    margin-bottom: 40px;
 }
 
-#btnPlay:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
+/* 2. Individuelle Höhen basierend auf deinen Original-Maßen */
+/* Play ist am höchsten (Alien + Stern) */
+#btnPlay { 
+    height: 130px; 
+    background-image: url("../assets/gameelements/ui/Play.png"); 
 }
 
-
-#btnShop {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px; 
-    height: 80px;
-    background-image: url("../assets/gameelements/ui/Shop.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    margin-bottom: 15px;
-    image-rendering: pixelated;
+/* Shop hat die Münzen oben drauf */
+#btnShop { 
+    height: 100px; 
+    background-image: url("../assets/gameelements/ui/Shop.png"); 
 }
 
-#btnShop:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
+/* Stats, Credits, Quit sind flach (9px hoch im Original) */
+#btnStats, #btnCredits, #btnQuit { 
+    height: 65px; 
 }
 
-#btnStats {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px; 
-    height: 80px;
-    background-image: url("../assets/gameelements/ui/Stats.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    margin-bottom: 15px;
-    image-rendering: pixelated;
-}
+#btnStats { background-image: url("../assets/gameelements/ui/Stats.png"); }
+#btnCredits { background-image: url("../assets/gameelements/ui/Credits.png"); }
+#btnQuit { background-image: url("../assets/gameelements/ui/Quit.png"); }
 
-#btnStats:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-}
-
-
-#btnCredits {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px; 
-    height: 80px;
-    background-image: url("../assets/gameelements/ui/Credits.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    margin-bottom: 15px;
-    image-rendering: pixelated;
-}
-
-#btnCredits:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-}
-
-
-#btnQuit {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px; 
-    height: 80px;
-    background-image: url("../assets/gameelements/ui/Quit.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    margin-bottom: 15px;
-    image-rendering: pixelated;
-}
-
-#btnQuit:hover {
+/* 3. Hover-Effekt für alle */
+#btnPlay:hover, #btnShop:hover, #btnStats:hover, #btnCredits:hover, #btnQuit:hover {
     transform: scale(1.05);
     filter: brightness(1.1);
 }
