@@ -128,27 +128,22 @@ image-rendering: crisp-edges;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-
     position: absolute;
     top: 50%; 
     left: 50%;
     transform: translate(-50%, -50%);
-    
     width: 350px; 
     height: 500px; 
     background-color: rgba(0, 0, 0, 0.95);
-    
     background-image: url('/assets/gameelements/ui/game_over_screen.png');
     background-repeat: no-repeat;
     background-position: center 100px; 
     background-size: 250px; 
     image-rendering: pixelated;
-
     border: 4px solid #ff004c;
     padding: 20px;
     z-index: 1000; 
     box-shadow: 10px 10px 0px rgba(255, 0, 76, 0.3);
-
     /* SCHRIFTART HIER ZENTRAL FESTLEGEN */
     font-family: 'Courier New', monospace;
     text-transform: uppercase;
@@ -192,12 +187,30 @@ image-rendering: crisp-edges;
 }
 
 #btnRerun {
-    background: #0051cb;
-    margin-top: 20px; /* Abstand nach oben */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 272px; 
+    height: 36px;
+    background-image: url("../assets/gameelements/ui/PlayAgain.png");
+    background-size: 100% 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 15px;
 }
 
 #btnHome {
-    background: #ff004c;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 272px; 
+    height: 36px;
+    background-image: url("../assets/gameelements/ui/BackToMenu.png");
+    background-size: 100% 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
     #settings-menu {
