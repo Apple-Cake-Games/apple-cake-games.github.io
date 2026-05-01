@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>max-studios | Alien Hazard</title>
+    <link rel="icon" type="image/x-icon" href="/assets/gameelements/player.png">
+    <link rel="stylesheet" href="/css/alienhazard.css">
+</head>
+<body>
+
+<div id="settings-menu">
+    <h2>Einstellungen</h2>
+    <button id="toggleSound" onclick="toggleSound()">Sound: AN</button>
+    <br>
+    <button onclick="document.getElementById('settings-menu').style.display='none'">SCHLIESSEN</button>
+</div>
+
+<button onclick="document.getElementById('settings-menu').style.display='block'" 
+        style="position: absolute; top: 20px; right: 20px; z-index: 100; 
+               background: rgba(0,0,0,0.8); border: 2px solid #00d4ff; color: #00d4ff; 
+               padding: 5px 10px; cursor: pointer; font-family: monospace;">
+    MENU
+</button>
+
+    <div class="ui">
+        <div id="real-clock">Lädt...</div>
+        Zeit: <span id="timer">0.00</span>s | Punkte: <span id="score">0</span>
+        <hr style="border: 0; border-top: 1px solid #00d4ff; margin: 10px 0;">
+        <b style="font-size: 0.8em;">Highscores:</b>
+        <div id="highscore-list" style="font-size: 0.7em; margin-top: 5px;">Lädt...</div>
+    </div>
+
+    <div id="item-display" class="ui" style="top: 200px; display: none;">
+    <b>Aktiv:</b> <span id="item-name">Schild</span><br>
+    Zeit: <span id="item-timer">10.00</span>s
+    </div>
+
+    <div id="game-container">
+        <div id="player"></div>
+    </div>
+
+    <div id="game-over-screen">
+    <h1>GAME OVER</h1>
+    <p>Deine Punkte: <span id="final-score">0</span></p>
+    <button id="btnRerun" onclick="location.reload()">NEU STARTEN</button>
+    <button id="btnHome" onclick="window.location.href ='index.html';">ZURÜCK INS HAUPTMENÜ</button>
+    </div>
+
+<script src="/scripts/alienhazard.js"></script>
+</body>
+</html>
