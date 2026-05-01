@@ -51,6 +51,32 @@ function createHash(value) {
             document.getElementById('toggleSound').innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
         });
 
+
+// Funktion zum Abrufen des gesamten Guthabens
+function getTotalCoins() {
+    // Wir holen die Zahl aus dem Speicher, falls nichts da ist, starten wir bei 0
+    let total = parseInt(localStorage.getItem('total_coins_v1')) || 0;
+    
+    // Sicherheit-Check (Optional, aber empfohlen):
+    const token = localStorage.getItem('total_coins_token');
+    if (token !== createHash(total)) {
+        console.warn("Coin-Manipulation erkannt!");
+        // Hier könnte man entscheiden, ob man die Coins auf 0 setzt oder ignoriert
+    }
+    return total;
+}
+
+// Funktion zum Hinzufügen von Coins zum Konto
+function addCoinsToAccount(amount) {
+    let currentTotal = getTotalCoins();
+    let newTotal = currentTotal + amount;
+    
+    // Speichern
+    localStorage.setItem('total_coins_v1', newTotal);
+    // Sicherheitstoken aktualisieren
+    localStorage.setItem('total_coins_token', createHash(newTotal));
+}
+
 function toggleSound() {
     soundEnabled = !soundEnabled;
     
@@ -77,22 +103,29 @@ function playSound(audioObj) {
     updateClock();
 
 function updateHighscoreDisplay() {
+    // 1. Highscores aus dem Speicher laden
     let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
     
-
+    // 2. Validierung mit deinem Hash-System
     const validScores = scores.filter(s => {
         const checkHash = createHash(s.points);
         return s.securityToken === checkHash;
     });
 
-
+    // 3. Die Highscore-Liste im HTML befüllen
     highscoreDisplay.innerHTML = validScores.length > 0 
         ? validScores.map((s, i) => `${i+1}. <b>${s.points} Pkt</b> <small>${s.date}</small>`).join('<br>')
         : "Keine Rekorde";
         
+    // 4. Gesamt-Coins im Scoreboard aktualisieren
+    const totalDisplay = document.getElementById('total-coins-display');
+    if (totalDisplay) {
+        totalDisplay.innerText = getTotalCoins();
+    }
 
+    // Sicherheits-Warnung in der Konsole
     if (validScores.length !== scores.length) {
-        console.warn("Manipulation im Speicher erkannt! Ungültige Scores wurden ignoriert.");
+        console.warn("Manipulation erkannt!");
     }
 }
 
@@ -120,11 +153,11 @@ function spawnShield() {
 
 
 function saveScore(newPoints) {
+    // 1. Highscore-Logik (hast du schon)
     let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
     const now = new Date();
     const dateStr = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
     
-
     const newEntry = { 
         points: newPoints, 
         date: dateStr, 
@@ -134,6 +167,10 @@ function saveScore(newPoints) {
     scores.push(newEntry);
     scores.sort((a, b) => b.points - a.points);
     localStorage.setItem('game_scores_v2', JSON.stringify(scores.slice(0, 3)));
+
+    // 2. NEU: Coins zum globalen Konto hinzufügen
+    // Hier nutzen wir 'score', da das deine gesammelten Kristalle in dieser Runde sind
+    addCoinsToAccount(newPoints); 
 }
 
     function createObstacle(x, y) {
