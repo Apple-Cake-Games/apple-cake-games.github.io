@@ -67,7 +67,7 @@ function renderShop() {
 
         skinList.innerHTML += `
             <div class="shop-item ${isActive ? 'equipped' : ''}">
-                <span>${skin.name} ${!isOwned ? `(${skin.price} 💎)` : ''}</span>
+                <span>${skin.name} ${!isOwned ? `(${skin.price} <img src="/assets/gameelements/ui/Coin.png" style="vertical-align: middle; margin-bottom: 2px; width: 18px;">)` : ''}</span>
                 ${isOwned 
                     ? `<button class="shop-btn" onclick="equipSkin('${id}')">${isActive ? 'Aktiv' : 'Nutzen'}</button>`
                     : `<button class="shop-btn" onclick="buySkin('${id}')">Kaufen</button>`

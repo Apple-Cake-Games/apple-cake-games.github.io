@@ -194,7 +194,7 @@ header h1 {
 
 
 
-#btnPlay, #btnShop, #btnStats, #btnCredits, #btnQuit #btnSettings {
+#btnPlay, #btnShop, #btnStats, #btnCredits, #btnQuit, #btnSettings {
     display: block;
     margin: 0 auto 10px auto; 
     width: 350px;            
@@ -222,17 +222,17 @@ header h1 {
 }
 
 
-#btnStats, #btnCredits, #btnQuit #btnSettings { 
+#btnStats, #btnCredits, #btnQuit, #btnSettings { 
     height: 65px; 
 }
 
 #btnStats { background-image: url("../assets/gameelements/ui/Stats.png"); }
 #btnCredits { background-image: url("../assets/gameelements/ui/Credits.png"); }
 #btnQuit { background-image: url("../assets/gameelements/ui/Quit.png"); }
-#btnSettings { background-image: url("../assets/gameelements/ui/Settings.png"); }
+#btnSettings { background-image: url("../assets/gameelements/ui/Options.png"); }
 
 
-#btnPlay:hover, #btnShop:hover, #btnStats:hover, #btnCredits:hover, #btnQuit:hover #btnSettings:hover {
+#btnPlay:hover, #btnShop:hover, #btnStats:hover, #btnCredits:hover, #btnQuit:hover, #btnSettings:hover {
     transform: scale(1.05);
     filter: brightness(1.1);
 }
