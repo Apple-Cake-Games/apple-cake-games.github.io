@@ -1,6 +1,7 @@
-const btnplay = document.getElementById("btnPlay")
-const btnGit = document.getElementById("icnGithub")
-const btnShop = document.getElementById("btnShop")
+const btnplay = document.getElementById("btnPlay");
+const btnGit = document.getElementById("icnGithub");
+const btnShop = document.getElementById("btnShop");
+const btnSettings = document.getElementById("btnSettings")
 
 btnplay.addEventListener("click", function(){
 
@@ -15,3 +16,28 @@ btnGit.addEventListener("click", function(){
 btnShop.addEventListener("click", function(){
     openShop();
 })
+
+function closeSettings() {
+    const overlay = document.getElementById('settings-overlay');
+    if (overlay) overlay.style.display = 'none';
+}
+
+
+btnSettings.addEventListener("click", function(){
+    const overlay = document.getElementById('settings-overlay');
+    if (overlay) overlay.style.display = 'block';
+});
+
+
+let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem('soundEnabled', soundEnabled);
+    document.getElementById('toggleSound').innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const soundBtn = document.getElementById('toggleSound');
+    if(soundBtn) soundBtn.innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
+});

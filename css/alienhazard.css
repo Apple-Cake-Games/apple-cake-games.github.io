@@ -6,21 +6,19 @@ overflow: hidden;
 
 background-image: url("/assets/gameelements/background.png");
 
-/* Das Bild soll so groß skaliert werden, dass es den Screen füllt */
+
 
 background-size: cover;
 
-/* Verhindert das Wiederholen */
+
 
 background-repeat: no-repeat;
 
-/* Zentriert das Bild auf dem Screen */
+
 
 background-position: center;
 
-/* Der entscheidende Befehl: Er zwingt Browser, die Skalierung
 
-kanten-scharf zu halten, statt sie zu glätten (blurren) */
 
 image-rendering: pixelated;
 
@@ -30,7 +28,7 @@ image-rendering: crisp-edges;
 
 } 
 
-        /* Hilfsklasse für Pixel-Look */
+      
         .pixel-art {
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
@@ -44,26 +42,26 @@ image-rendering: crisp-edges;
         top: 20px; 
         left: 20px;
         color: #00d4ff; 
-        /* Wähle eine klassische Monospace-Schrift */
+       
         font-family: 'Courier New', monospace; 
-        background: rgba(0, 0, 0, 0.9); /* Etwas dunkler ohne Transparenz-Blur */
+        background: rgba(0, 0, 0, 0.9); 
         padding: 15px 25px;
         
-        /* Pixel-Style: Eckige Kanten */
+      
         border-radius: 0; 
-        border: 4px solid #00d4ff; /* Rahmen rundherum statt nur links */
+        border: 4px solid #00d4ff; 
         
-        /* Pixel-Schatten statt weichem Glow */
+       
         box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
         
-        /* Kein Blur für scharfe Kanten */
+     
         backdrop-filter: none; 
         
         text-transform: uppercase;
         letter-spacing: 2px; 
         z-index: 10;
         
-        /* Hilft, die Schrift bei Skalierung scharf zu halten */
+       
         image-rendering: pixelated;
     }
 
@@ -72,19 +70,18 @@ image-rendering: crisp-edges;
 
         #game-container { width: 100vw; height: 100vh; position: relative; }
 
-        /* Ufo: Skaliert auf 60x45px */
-/* Den Standard-Skin-Pfad im CSS entfernen oder als Fallback lassen */
+        
 #player {
     width: 60px; 
     height: 45px; 
     position: absolute;
-    /* Füge diese Zeile als Standard hinzu: */
+ 
     background-image: url('/assets/gameelements/player.png'); 
     background-size: contain;
     background-repeat: no-repeat;
     transition: transform 0.1s;
     image-rendering: pixelated;
-    /* Falls das Bild fehlt, eine Farbe zur Fehlersuche: */
+   
     background-color: transparent; 
     z-index: 50;
 }
@@ -106,7 +103,7 @@ image-rendering: crisp-edges;
             100% { filter: drop-shadow(0 0 5px rgb(255, 193, 255)); }
         }
 
-        /* Kristall: Skaliert auf 40x34px */
+      
         .coin {
             position: absolute; 
             width: 40px; height: 34px;
@@ -115,7 +112,7 @@ image-rendering: crisp-edges;
             animation: popIn 0.5s ease-out forwards, coinGlow 1.5s infinite ease-in-out;
         }
         
-        /* Krater: Skaliert auf 44x44px */
+    
         .obstacle { 
             position: absolute; 
             width: 44px; height: 44px; 
@@ -125,16 +122,16 @@ image-rendering: crisp-edges;
         }
 
 
-/* Shop Overlay Hauptcontainer */
+
 #shop-overlay {
-    display: none; /* Standardmäßig unsichtbar */
+    display: none; 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 320px;
     background-color: rgba(0, 0, 0, 0.95);
-    border: 4px solid #ffd700; /* Goldener Rahmen für den Shop */
+    border: 4px solid #ffd700; 
     z-index: 2000;
     padding: 20px;
     text-align: center;
@@ -150,7 +147,7 @@ image-rendering: crisp-edges;
     text-transform: uppercase;
 }
 
-/* Die einzelnen Items im Shop */
+
 .shop-item {
     display: flex;
     justify-content: space-between;
@@ -166,7 +163,7 @@ image-rendering: crisp-edges;
     text-transform: uppercase;
 }
 
-/* Buttons im Shop */
+
 .shop-btn {
     background: #ffd700;
     color: #000;
@@ -205,10 +202,10 @@ image-rendering: crisp-edges;
     position: absolute;
     width: 40px; 
     height: 40px;
-    background-image: url("/assets/gameelements/shield.png"); /* Pfad zu deinem Bild */
+    background-image: url("/assets/gameelements/shield.png"); 
     background-size: contain;
     background-repeat: no-repeat;
-    image-rendering: pixelated; /* Wichtig für den Pixel-Look! */
+    image-rendering: pixelated; 
     z-index: 5;
 }
 
@@ -234,7 +231,7 @@ image-rendering: crisp-edges;
     padding: 20px;
     z-index: 1000; 
     box-shadow: 10px 10px 0px rgba(255, 0, 76, 0.3);
-    /* SCHRIFTART HIER ZENTRAL FESTLEGEN */
+    
     font-family: 'Courier New', monospace;
     text-transform: uppercase;
 }
@@ -248,7 +245,7 @@ image-rendering: crisp-edges;
 }
 
 #game-over-screen p {
-    margin-top: 210px; /* Schiebt Text in den Strahl */
+    margin-top: 210px; 
     font-size: 40px;
     color: #fff;
     font-weight: bold;
@@ -267,7 +264,7 @@ image-rendering: crisp-edges;
     width: 100%;
     border: none;
     padding: 12px 20px;
-    font-family: 'Courier New', monospace; /* Explizit gesetzt */
+    font-family: 'Courier New', monospace; 
     font-weight: bold;
     font-size: 1rem;
     color: #fff;
@@ -288,6 +285,10 @@ image-rendering: crisp-edges;
     background-color: transparent;
     cursor: pointer;
     margin-bottom: 15px;
+}
+#btnRerun:hover, #btnHome:hover{
+    transform: scale(1.05);
+    filter: brightness(1.1);
 }
 
 #btnShop {

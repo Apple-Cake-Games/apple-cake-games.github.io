@@ -29,7 +29,7 @@ body{
             100% { filter: drop-shadow(0 0 5px rgb(255, 193, 255)); }
         }
 
-        /* Kristall: Skaliert auf 40x34px */
+     
         .coin {
             position: absolute; 
             width: 40px; height: 34px;
@@ -38,7 +38,7 @@ body{
             animation: popIn 0.5s ease-out forwards, coinGlow 1.5s infinite ease-in-out;
         }
         
-        /* Krater: Skaliert auf 44x44px */
+       
         .obstacle { 
             position: absolute; 
             width: 44px; height: 44px; 
@@ -48,16 +48,16 @@ body{
         }
 
 
-/* Shop Overlay Hauptcontainer */
+
 #shop-overlay {
-    display: none; /* Standardmäßig unsichtbar */
+    display: none; 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 320px;
     background-color: rgba(0, 0, 0, 0.95);
-    border: 4px solid #ffd700; /* Goldener Rahmen für den Shop */
+    border: 4px solid #ffd700;
     z-index: 2000;
     padding: 20px;
     text-align: center;
@@ -73,7 +73,7 @@ body{
     text-transform: uppercase;
 }
 
-/* Die einzelnen Items im Shop */
+
 .shop-item {
     display: flex;
     justify-content: space-between;
@@ -89,7 +89,7 @@ body{
     text-transform: uppercase;
 }
 
-/* Buttons im Shop */
+
 .shop-btn {
     background: #ffd700;
     color: #000;
@@ -126,11 +126,11 @@ body{
 
 #icnGithub {
     filter: invert();
-    position: fixed;   /* Bleibt auch beim Scrollen an der Stelle */
-    bottom: 16px;         /* Ganz unten */
-    left: 19px;           /* Ganz links */
-    width: 40px;      /* Hier stellst du die Größe ein */
-    height: auto;      /* Behält das Seitenverhältnis bei */
+    position: fixed;   
+    bottom: 16px;        
+    left: 19px;          
+    width: 40px;     
+    height: auto;      
 }
 
 #icnGithub:hover {
@@ -163,11 +163,41 @@ header h1 {
     line-height: 1.5;
 }
 
-/* 1. Gemeinsame Regeln für ALLE Menü-Buttons */
-#btnPlay, #btnShop, #btnStats, #btnCredits, #btnQuit {
+#settings-overlay {
+    image-rendering: pixelated;
+    box-shadow: 10px 10px 0px rgba(255, 215, 0, 0.2);
+}
+
+#settings-overlay h2 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+
+#toggleSound {
+    background: transparent;
+    color: white;
+    border: 2px solid #ffd700;
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#toggleSound:hover {
+    background: #ffd700;
+    color: black;
+}
+
+
+
+
+#btnPlay, #btnShop, #btnStats, #btnCredits, #btnQuit #btnSettings {
     display: block;
-    margin: 0 auto 10px auto; /* Zentriert, unten 10px Abstand */
-    width: 350px;             /* Einheitliche Breite für alle */
+    margin: 0 auto 10px auto; 
+    width: 350px;            
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -179,30 +209,30 @@ header h1 {
     margin-bottom: 40px;
 }
 
-/* 2. Individuelle Höhen basierend auf deinen Original-Maßen */
-/* Play ist am höchsten (Alien + Stern) */
+
 #btnPlay { 
     height: 130px; 
     background-image: url("../assets/gameelements/ui/Play.png"); 
 }
 
-/* Shop hat die Münzen oben drauf */
+
 #btnShop { 
     height: 100px; 
     background-image: url("../assets/gameelements/ui/Shop.png"); 
 }
 
-/* Stats, Credits, Quit sind flach (9px hoch im Original) */
-#btnStats, #btnCredits, #btnQuit { 
+
+#btnStats, #btnCredits, #btnQuit #btnSettings { 
     height: 65px; 
 }
 
 #btnStats { background-image: url("../assets/gameelements/ui/Stats.png"); }
 #btnCredits { background-image: url("../assets/gameelements/ui/Credits.png"); }
 #btnQuit { background-image: url("../assets/gameelements/ui/Quit.png"); }
+#btnSettings { background-image: url("../assets/gameelements/ui/Settings.png"); }
 
-/* 3. Hover-Effekt für alle */
-#btnPlay:hover, #btnShop:hover, #btnStats:hover, #btnCredits:hover, #btnQuit:hover {
+
+#btnPlay:hover, #btnShop:hover, #btnStats:hover, #btnCredits:hover, #btnQuit:hover #btnSettings:hover {
     transform: scale(1.05);
     filter: brightness(1.1);
 }

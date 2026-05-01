@@ -2,10 +2,10 @@ const SECRET_KEY = "AppleCake-Super-Secret-99!8794237128907419820748912734890312
 
 const SKINS = {
     'default': { name: 'Green Alien', price: 0, img: '../assets/gameelements/player.png' },
-    'red': { name: 'Red Alien', price: 50, img: '../assets/gameelements/skins/red.png' },
-    'pink': { name: 'Pink Alien', price: 100, img: '../assets/gameelements/skins/pink.png' },
-    'void': { name: 'Void UFO', price: 200, img: '../assets/gameelements/skins/void.png' },
-    'gold': { name: 'Gold UFO', price: 500, img: '../assets/gameelements/skins/gold.png' },
+    '7012734ß09172349ß075231907ß10237509ß1235': { name: 'Red Alien', price: 50, img: '../assets/gameelements/skins/red.png' },
+    '4376891235609812368586089216358902163553': { name: 'Pink Alien', price: 100, img: '../assets/gameelements/skins/pink.png' },
+    '7853201750213568126539062130981236508213': { name: 'Void UFO', price: 200, img: '../assets/gameelements/skins/void.png' },
+    '7012865092165309812658906523906529106210': { name: 'Gold UFO', price: 500, img: '../assets/gameelements/skins/gold.png' },
 };
 
 function createHash(value) {
@@ -34,7 +34,7 @@ function addCoinsToAccount(amount) {
     localStorage.setItem('total_coins_token', createHash(newTotal));
 }
 
-// --- NEU: SHOP LOGIK (Damit der Button funktioniert) ---
+
 
 function openShop() {
     const overlay = document.getElementById('shop-overlay');
@@ -43,7 +43,7 @@ function openShop() {
     if (overlay) {
         overlay.style.display = 'block';
         if (balance) balance.innerText = getTotalCoins();
-        renderShop(); // Zeichnet die Skin-Liste
+        renderShop(); 
     }
 }
 
@@ -91,7 +91,7 @@ function buySkin(skinId) {
         localStorage.setItem('owned_skins', JSON.stringify(ownedSkins));
         
         renderShop();
-        // Checkt ob die Funktion im Spiel existiert um Anzeige zu updaten
+        
         if (typeof updateHighscoreDisplay === "function") updateHighscoreDisplay();
     } else {
         alert("Nicht genug Kristalle!");
