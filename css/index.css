@@ -39,3 +39,50 @@ header {
 }
 
 
+.information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    color: white;
+    font-family: "Bitcount Single Ink", sans-serif;
+}
+
+.information p {
+    font-size: 24px;
+    margin-bottom: 25px;
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+#informationbtn {
+    background-color: #ff4d4d; 
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    font-family: "Bitcount Single Ink", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    
+
+    box-shadow: 0px 6px 0px #b33636; 
+    transition: all 0.1s ease;
+}
+
+
+#informationbtn:hover {
+    background-color: #ff6666;
+    transform: translateY(2px);
+    box-shadow: 0px 4px 0px #b33636;
+}
+
+
+#informationbtn:active {
+    transform: translateY(6px);
+    box-shadow: 0px 0px 0px #b33636;
+}
