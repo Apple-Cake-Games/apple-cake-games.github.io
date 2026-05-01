@@ -5,7 +5,7 @@
 }
 
 body{
-    background-image: url(/assets/gameelements/ui/background.png);
+    background-image: url(../assets/gameelements/ui/background.png);
 }
 
 
@@ -14,7 +14,7 @@ body{
     color: white;
 }
 
-header {
+header h1 {
     font-family: sans-serif;
     font-size:50px;
     transition: color 0.3s ease;
