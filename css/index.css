@@ -8,10 +8,21 @@ body{
     background-image: url(../assets/gameelements/ui/background.png);
 }
 
-
-
 .information {
     color: white;
+}
+
+#icnGithub {
+    filter: invert();
+    position: fixed;   /* Bleibt auch beim Scrollen an der Stelle */
+    bottom: 16px;         /* Ganz unten */
+    left: 19px;           /* Ganz links */
+    width: 40px;      /* Hier stellst du die Größe ein */
+    height: auto;      /* Behält das Seitenverhältnis bei */
+}
+
+#icnGithub:hover {
+    cursor: pointer;
 }
 
 header h1 {
@@ -21,8 +32,7 @@ header h1 {
     color: white;
     text-align: center;
 }
-
-
+ 
 .information {
     display: flex;
     flex-direction: column;
