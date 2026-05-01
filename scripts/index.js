@@ -3,10 +3,10 @@ const btnGit = document.getElementById("icnGithub")
 
 btnplay.addEventListener("click", function(){
 
-    window.open("/html/alienhazard.html");
+    window.open("/html/alienhazard.html", "_self");
 
 });
 
 btnGit.addEventListener("click", function(){
-    window.open("https://github.com/Apple-Cake-Games/apple-cake-games.github.io");
+    window.open("https://github.com/Apple-Cake-Games/apple-cake-games.github.io", "_self");
 })
