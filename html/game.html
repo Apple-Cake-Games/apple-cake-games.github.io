@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>max-studios | Alien Hazard</title>
+    <link rel="icon" type="image/x-icon" href="/assets/gameelements/player.png">
+    <style>
+ body {
+
+margin: 0;
+
+overflow: hidden;
+
+background-image: url("/assets/gameelements/background.png");
+
+/* Das Bild soll so groß skaliert werden, dass es den Screen füllt */
+
+background-size: cover;
+
+/* Verhindert das Wiederholen */
+
+background-repeat: no-repeat;
+
+/* Zentriert das Bild auf dem Screen */
+
+background-position: center;
+
+/* Der entscheidende Befehl: Er zwingt Browser, die Skalierung
+
+kanten-scharf zu halten, statt sie zu glätten (blurren) */
+
+image-rendering: pixelated;
+
+image-rendering: -moz-crisp-edges;
+
+image-rendering: crisp-edges;
+
+} 
+
+        /* Hilfsklasse für Pixel-Look */
+        .pixel-art {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+    .ui {
+        position: absolute; 
+        top: 20px; 
+        left: 20px;
+        color: #00d4ff; 
+        /* Wähle eine klassische Monospace-Schrift */
+        font-family: 'Courier New', monospace; 
+        background: rgba(0, 0, 0, 0.9); /* Etwas dunkler ohne Transparenz-Blur */
+        padding: 15px 25px;
+        
+        /* Pixel-Style: Eckige Kanten */
+        border-radius: 0; 
+        border: 4px solid #00d4ff; /* Rahmen rundherum statt nur links */
+        
+        /* Pixel-Schatten statt weichem Glow */
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+        
+        /* Kein Blur für scharfe Kanten */
+        backdrop-filter: none; 
+        
+        text-transform: uppercase;
+        letter-spacing: 2px; 
+        z-index: 10;
+        
+        /* Hilft, die Schrift bei Skalierung scharf zu halten */
+        image-rendering: pixelated;
+    }
+
+        #timer, #score { font-weight: bold; color: #fff; text-shadow: 0 0 5px #00d4ff; }
+        #real-clock { display: none; }
+
+        #game-container { width: 100vw; height: 100vh; position: relative; }
+
+        /* Ufo: Skaliert auf 60x45px */
+        #player {
+            width: 60px; height: 45px; position: absolute;
+            background-image: url('/assets/gameelements/player.png'); 
+            background-size: contain;
+            transition: transform 0.1s;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes coinGlow {
+            0% { filter: drop-shadow(0 0 5px rgb(255, 225, 255)); }
+            50% { filter: drop-shadow(0 0 5px rgb(255, 208, 255)); }
+            100% { filter: drop-shadow(0 0 5px rgb(255, 193, 255)); }
+        }
+
+        /* Kristall: Skaliert auf 40x34px */
+        .coin {
+            position: absolute; 
+            width: 40px; height: 34px;
+            background-image: url("/assets/gameelements/christal_pink.png");
+            background-size: contain;
+            animation: popIn 0.5s ease-out forwards, coinGlow 1.5s infinite ease-in-out;
+        }
+        
+        /* Krater: Skaliert auf 44x44px */
+        .obstacle { 
+            position: absolute; 
+            width: 44px; height: 44px; 
+            background-image: url("/assets/gameelements/crater1.png");
+            background-size: 44px 44px;
+            image-rendering: pixelated;
+        }
+        #game-over-screen {
+    display: none; /* Erst versteckt */
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    border: 4px solid #ff004c; /* Roter Rahmen für Alarm */
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    z-index: 100;
+    box-shadow: 10px 10px 0px rgba(255, 0, 76, 0.3);
+}
+
+
+    #game-over-screen h1 { color: #ff004c; margin-top: 0; }
+    #btnRerun {
+        background: #0051cb; color: #fff;
+        border: none; padding: 10px 20px;
+        font-family: inherit; font-weight: bold;
+        cursor: pointer; margin-top: 20px;
+        text-transform: uppercase;
+    }
+    #btnHome {
+        background: #ff004c; color: #fff;
+        border: none; padding: 10px 20px;
+        font-family: inherit; font-weight: bold;
+        cursor: pointer; margin-top: 20px;
+        text-transform: uppercase;
+    }
+
+    #settings-menu {
+    display: none;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    border: 4px solid #00d4ff; /* Pixel-Rahmen */
+    padding: 30px;
+    text-align: center;
+    color: #00d4ff;
+    font-family: 'Courier New', monospace;
+    z-index: 1000;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+}
+
+#settings-menu button {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #00d4ff;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+    width: 150px;
+}
+
+#settings-menu button:hover {
+    background: #00d4ff;
+    color: #000;
+}
+
+    .shield-active {
+    filter: drop-shadow(0 0 10px #00d4ff);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    }
+
+    .menu-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.9);
+    border: 4px solid #00d4ff;
+    color: #00d4ff;
+    padding: 10px 15px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.menu-btn:hover {
+    background: #00d4ff;
+    color: #000;
+}
+    </style>
+</head>
+<body>
+
+<div id="settings-menu">
+    <h2>Einstellungen</h2>
+    <button id="toggleSound" onclick="toggleSound()">Sound: AN</button>
+    <br>
+    <button onclick="document.getElementById('settings-menu').style.display='none'">SCHLIESSEN</button>
+</div>
+
+<button onclick="document.getElementById('settings-menu').style.display='block'" 
+        style="position: absolute; top: 20px; right: 20px; z-index: 100; 
+               background: rgba(0,0,0,0.8); border: 2px solid #00d4ff; color: #00d4ff; 
+               padding: 5px 10px; cursor: pointer; font-family: monospace;">
+    MENU
+</button>
+
+    <div class="ui">
+        <div id="real-clock">Lädt...</div>
+        Zeit: <span id="timer">0.00</span>s | Punkte: <span id="score">0</span>
+        <hr style="border: 0; border-top: 1px solid #00d4ff; margin: 10px 0;">
+        <b style="font-size: 0.8em;">Highscores:</b>
+        <div id="highscore-list" style="font-size: 0.7em; margin-top: 5px;">Lädt...</div>
+    </div>
+
+    <div id="item-display" class="ui" style="top: 200px; display: none;">
+    <b>Aktiv:</b> <span id="item-name">Schild</span><br>
+    Zeit: <span id="item-timer">10.00</span>s
+    </div>
+
+    <div id="game-container">
+        <div id="player"></div>
+    </div>
+
+    <div id="game-over-screen">
+    <h1>GAME OVER</h1>
+    <p>Deine Punkte: <span id="final-score">0</span></p>
+    <button id="btnRerun" onclick="location.reload()">NEU STARTEN</button>
+    <button id="btnHome" onclick="window.location.href ='index.html';">ZURÜCK INS HAUPTMENÜ</button>
+    </div>
+
+<script>
+    const player = document.getElementById('player');
+    const timerDisplay = document.getElementById('timer');
+    const scoreDisplay = document.getElementById('score');
+    const highscoreDisplay = document.getElementById('highscore-list');
+    const gameContainer = document.getElementById('game-container');
+    const clockDisplay = document.getElementById('real-clock');
+
+    let isShielded = false;
+    let shieldTimer = 0;
+    const itemDisplay = document.getElementById('item-display');
+    const itemTimerText = document.getElementById('item-timer');
+
+    const coinSound = new Audio("/assets/sounds/coin.mp3");
+    const gameoverSound = new Audio("/assets/sounds/gameover.mp3");
+
+    let score = 0;
+    let posX = 100, posY = 100;
+    const baseSpeed = 5; 
+    let speedMultiplier = 1; 
+    let currentDir = 'd'; 
+    const startTime = Date.now();
+    let gameOver = false;
+
+    const obstacles = [];
+    let currentCoin = null;
+
+
+            // Sound-Einstellung aus localStorage laden (Standard ist 'true', falls nichts gespeichert)
+        let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+
+        // Button-Text beim Laden korrekt setzen
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('toggleSound').innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
+        });
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    
+    // Speichern im localStorage
+    localStorage.setItem('soundEnabled', soundEnabled);
+    
+    const btn = document.getElementById('toggleSound');
+    btn.innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
+}
+
+// Deine Audio-Funktionen leicht anpassen:
+function playSound(audioObj) {
+    if (soundEnabled) {
+        audioObj.currentTime = 0; // Neustarten falls es mehrmals schnell hintereinander kommt
+        audioObj.play().catch(() => {});
+    }
+}
+
+    function updateClock() {
+        const now = new Date();
+        clockDisplay.innerText = now.toLocaleDateString('de-DE') + " | " + now.toLocaleTimeString('de-DE');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function updateHighscoreDisplay() {
+        const scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
+        highscoreDisplay.innerHTML = scores.length > 0 
+            ? scores.map((s, i) => `${i+1}. <b>${s.points} Pkt</b> <small>${s.date}</small>`).join('<br>')
+            : "Keine Rekorde";
+    }
+
+        // Funktion zum Spawnen des Schildes (ähnlich wie Kristall, aber seltener)
+    function spawnShield() {
+        if (gameOver || document.querySelector('.shield')) return;
+        
+        const shield = document.createElement('div');
+        shield.className = 'shield';
+        shield.style.cssText = "position:absolute; width:40px; height:40px; background:yellow; border-radius:50%; box-shadow:0 0 15px yellow;";
+        shield.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+        shield.style.top = Math.random() * (window.innerHeight - 40) + 'px';
+        gameContainer.appendChild(shield);
+
+        // Schild verschwindet nach 7 Sekunden, wenn nicht gesammelt
+        setTimeout(() => { if(shield.parentElement) shield.remove(); }, 7000);
+    }
+
+    function saveScore(newPoints) {
+        let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
+        scores.push({ points: newPoints, date: dateStr });
+        scores.sort((a, b) => b.points - a.points);
+        localStorage.setItem('game_scores_v2', JSON.stringify(scores.slice(0, 3)));
+    }
+
+    function createObstacle(x, y) {
+        const obs = document.createElement('div');
+        obs.className = 'obstacle';
+        obs.style.left = x + 'px';
+        obs.style.top = y + 'px';
+        gameContainer.appendChild(obs);
+        obstacles.push(obs);
+    }
+
+    function spawnCoin() {
+        if (gameOver) return;
+        const coin = document.createElement('div');
+        coin.className = 'coin';
+        const x = Math.random() * (window.innerWidth - 40);
+        const y = Math.random() * (window.innerHeight - 34);
+        coin.style.left = x + 'px';
+        coin.style.top = y + 'px';
+        gameContainer.appendChild(coin);
+        currentCoin = coin;
+    }
+
+    function checkCollision(r1, r2) {
+        return !(r1.right < r2.left || r1.left > r2.right || 
+                 r1.bottom < r2.top || r1.top > r2.bottom);
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
+        if (['w', 'a', 's', 'd'].includes(key)) currentDir = key;
+    });
+
+    // Wisch-Steuerung
+    let touchStartX = 0;
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, {passive: false});
+
+    window.addEventListener('touchend', (e) => {
+        if (touchStartX === 0 || touchStartY === 0) return;
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > 30 || Math.abs(diffY) > 30) {
+            currentDir = Math.abs(diffX) > Math.abs(diffY) ? (diffX > 0 ? 'd' : 'a') : (diffY > 0 ? 's' : 'w');
+        }
+        touchStartX = 0; touchStartY = 0;
+    }, {passive: false});
+
+    function update() {
+        if (gameOver) return;
+
+        timerDisplay.innerText = ((Date.now() - startTime) / 1000).toFixed(2);
+
+        // Bewegungslogik mit Geschwindigkeits-Multiplikator
+        let currentSpeed = baseSpeed * speedMultiplier;
+        if (currentDir === 'w') posY -= currentSpeed;
+        if (currentDir === 's') posY += currentSpeed;
+        if (currentDir === 'a') posX -= currentSpeed;
+        if (currentDir === 'd') posX += currentSpeed;
+
+                // Screen Wrapping Logik
+        if (posX < -60) posX = window.innerWidth;
+        if (posX > window.innerWidth) posX = -60;
+        if (posY < -45) posY = window.innerHeight;
+        if (posY > window.innerHeight) posY = -45;
+
+        player.style.left = posX + 'px';
+        player.style.top = posY + 'px';
+
+
+        const playerRect = player.getBoundingClientRect();
+
+        // 1. Kristall einsammeln
+        if (currentCoin && checkCollision(playerRect, currentCoin.getBoundingClientRect())) {
+            score++;
+            scoreDisplay.innerText = score;
+            if (speedMultiplier < 2.0) speedMultiplier += 0.02;
+
+            const x = parseFloat(currentCoin.style.left);
+            const y = parseFloat(currentCoin.style.top);
+            currentCoin.remove();
+            currentCoin = null;
+            playSound(coinSound);
+            setTimeout(() => { createObstacle(x, y); }, 500);
+            setTimeout(spawnCoin, 2000);
+        }
+
+// 1. Kollisionsprüfung für Schild
+        const shieldElement = document.querySelector('.shield');
+        if (shieldElement && checkCollision(playerRect, shieldElement.getBoundingClientRect())) {
+            shieldElement.remove();
+            isShielded = true;
+            shieldTimer = 4;
+            player.classList.add('shield-active');
+            itemDisplay.style.display = 'block';
+        }
+
+        // 2. Schild-Timer Logik
+        if (isShielded) {
+            shieldTimer -= 0.016; 
+            itemTimerText.innerText = shieldTimer.toFixed(1);
+            if (shieldTimer <= 0) {
+                isShielded = false;
+                player.classList.remove('shield-active');
+                itemDisplay.style.display = 'none';
+            }
+        }
+        
+        // 3. EINE EINZIGE Hindernis-Prüfung (Die neue Version)
+        obstacles.forEach(obs => {
+            if (checkCollision(playerRect, obs.getBoundingClientRect())) {
+                if (!isShielded) { 
+                    // Nur wenn KEIN Schild aktiv ist, ist das Spiel vorbei
+                    gameOver = true;
+                    saveScore(score);
+                    playSound(gameoverSound);
+                    document.getElementById('final-score').innerText = score;
+                    document.getElementById('game-over-screen').style.display = 'block';
+                } else {
+                    // Schild-Bonus: Hindernis wird zerstört
+                    obs.remove();
+                    obstacles.splice(obstacles.indexOf(obs), 1);
+                }
+            }
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    updateHighscoreDisplay();
+    spawnCoin();
+    update();
+        // Ruft die Funktion alle 15-25 Sekunden auf
+    setInterval(() => {
+        if (!gameOver && Math.random() > 0.5) spawnShield();
+    }, 15000);
+</script>
+</body>
+</html>
