@@ -46,7 +46,11 @@ body{
             background-size: 44px 44px;
             image-rendering: pixelated;
         }
-
+        
+#credits-overlay button:hover {
+    background: #ffd700;
+    color: black;
+}
 
 
 #shop-overlay {

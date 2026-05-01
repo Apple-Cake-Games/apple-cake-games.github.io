@@ -46,3 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
 btnQuit.addEventListener("click", function(){
     window.open("https://www.youtube.com/watch?v=Aq5WXmQQooo", "_self")
 })
+
+const btnCredits = document.getElementById("btnCredits");
+
+// Credits öffnen
+btnCredits.addEventListener("click", function() {
+    const overlay = document.getElementById('credits-overlay');
+    if (overlay) overlay.style.display = 'block';
+});
+
+// Credits schließen
+function closeCredits() {
+    const overlay = document.getElementById('credits-overlay');
+    if (overlay) overlay.style.display = 'none';
+}
