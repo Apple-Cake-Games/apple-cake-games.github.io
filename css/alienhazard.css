@@ -73,11 +73,25 @@ image-rendering: crisp-edges;
         #game-container { width: 100vw; height: 100vh; position: relative; }
 
         /* Ufo: Skaliert auf 60x45px */
-        #player {
-            width: 60px; height: 45px; position: absolute;
-            background-image: url('/assets/gameelements/player.png'); 
-            background-size: contain;
-            transition: transform 0.1s;
+/* Den Standard-Skin-Pfad im CSS entfernen oder als Fallback lassen */
+#player {
+    width: 60px; 
+    height: 45px; 
+    position: absolute;
+    /* Füge diese Zeile als Standard hinzu: */
+    background-image: url('/assets/gameelements/player.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.1s;
+    image-rendering: pixelated;
+    /* Falls das Bild fehlt, eine Farbe zur Fehlersuche: */
+    background-color: transparent; 
+    z-index: 50;
+}
+
+        .shop-item.equipped {
+            border: 2px solid #ffd700;
+            background: rgba(255, 215, 0, 0.2);
         }
 
         @keyframes popIn {
@@ -109,6 +123,82 @@ image-rendering: crisp-edges;
             background-size: 44px 44px;
             image-rendering: pixelated;
         }
+
+
+/* Shop Overlay Hauptcontainer */
+#shop-overlay {
+    display: none; /* Standardmäßig unsichtbar */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    background-color: rgba(0, 0, 0, 0.95);
+    border: 4px solid #ffd700; /* Goldener Rahmen für den Shop */
+    z-index: 2000;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    color: white;
+    box-shadow: 10px 10px 0px rgba(255, 215, 0, 0.2);
+    image-rendering: pixelated;
+}
+
+#shop-overlay h2 {
+    color: #ffd700;
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
+/* Die einzelnen Items im Shop */
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #00d4ff;
+}
+
+.shop-item span {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Buttons im Shop */
+.shop-btn {
+    background: #ffd700;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.shop-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+}
+
+.shop-close-btn {
+    margin-top: 20px;
+    background: transparent;
+    color: #ff004c;
+    border: 2px solid #ff004c;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.shop-close-btn:hover {
+    background: #ff004c;
+    color: #fff;
+}
 
 
 .shield {
