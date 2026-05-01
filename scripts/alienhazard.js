@@ -24,9 +24,27 @@
     const obstacles = [];
     let currentCoin = null;
 
+    const SECRET_KEY = "AppleCake-Super-Secret-99!879423712890741982074891273489031234789321049128041239847031294012387104239871209712430978"; // Dein "Siegel-Stempel"
+
+function createHash(value) {
+    let str = value + SECRET_KEY;
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0; 
+    }
+    return hash.toString();
+}
+
+
+
+
 
             // Sound-Einstellung aus localStorage laden (Standard ist 'true', falls nichts gespeichert)
         let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+
+
+    
 
         // Button-Text beim Laden korrekt setzen
         document.addEventListener('DOMContentLoaded', () => {
@@ -58,12 +76,25 @@ function playSound(audioObj) {
     setInterval(updateClock, 1000);
     updateClock();
 
-    function updateHighscoreDisplay() {
-        const scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
-        highscoreDisplay.innerHTML = scores.length > 0 
-            ? scores.map((s, i) => `${i+1}. <b>${s.points} Pkt</b> <small>${s.date}</small>`).join('<br>')
-            : "Keine Rekorde";
+function updateHighscoreDisplay() {
+    let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
+    
+
+    const validScores = scores.filter(s => {
+        const checkHash = createHash(s.points);
+        return s.securityToken === checkHash;
+    });
+
+
+    highscoreDisplay.innerHTML = validScores.length > 0 
+        ? validScores.map((s, i) => `${i+1}. <b>${s.points} Pkt</b> <small>${s.date}</small>`).join('<br>')
+        : "Keine Rekorde";
+        
+
+    if (validScores.length !== scores.length) {
+        console.warn("Manipulation im Speicher erkannt! Ungültige Scores wurden ignoriert.");
     }
+}
 
         // Funktion zum Spawnen des Schildes (ähnlich wie Kristall, aber seltener)
 function spawnShield() {
@@ -88,14 +119,22 @@ function spawnShield() {
 }
 
 
-    function saveScore(newPoints) {
-        let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
-        scores.push({ points: newPoints, date: dateStr });
-        scores.sort((a, b) => b.points - a.points);
-        localStorage.setItem('game_scores_v2', JSON.stringify(scores.slice(0, 3)));
-    }
+function saveScore(newPoints) {
+    let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
+    
+
+    const newEntry = { 
+        points: newPoints, 
+        date: dateStr, 
+        securityToken: createHash(newPoints) 
+    };
+    
+    scores.push(newEntry);
+    scores.sort((a, b) => b.points - a.points);
+    localStorage.setItem('game_scores_v2', JSON.stringify(scores.slice(0, 3)));
+}
 
     function createObstacle(x, y) {
         const obs = document.createElement('div');
