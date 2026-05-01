@@ -290,6 +290,23 @@ image-rendering: crisp-edges;
     margin-bottom: 15px;
 }
 
+#btnShop {
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 272px; 
+    height: 36px;
+    background-image: url("../assets/gameelements/ui/Shop.png") !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat;
+    background-color: transparent !important; /* Entfernt den gelben Balken */
+    border: none !important; /* Entfernt den Standard-Rahmen */
+    cursor: pointer;
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+    outline: none; /* Entfernt den Fokus-Rahmen beim Klicken */
+}
+
 #btnHome {
     display: block;
     margin-left: auto;

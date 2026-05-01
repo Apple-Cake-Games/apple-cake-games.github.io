@@ -24,24 +24,8 @@
     const obstacles = [];
     let currentCoin = null;
 
-    const SECRET_KEY = "AppleCake-Super-Secret-99!879423712890741982074891273489031234789321049128041239847031294012387104239871209712430978"; // Dein "Siegel-Stempel"
 
-function createHash(value) {
-    let str = value + SECRET_KEY;
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        hash = ((hash << 5) - hash) + str.charCodeAt(i);
-        hash |= 0; 
-    }
-    return hash.toString();
-}
 
-// Hier definierst du alle deine Skins
-const SKINS = {
-    'default': { name: 'Standard UFO', price: 0, img: '../assets/gameelements/player.png' },
-    'neon': { name: 'Neon Scout', price: 150, img: '../assets/gameelements/player_neon.png' },
-    'gold': { name: 'Gold Edition', price: 500, img: '../assets/gameelements/player_gold.png' }
-};
 
 
 
@@ -57,41 +41,6 @@ const SKINS = {
         });
 
 
-// Funktion zum Abrufen des gesamten Guthabens
-function getTotalCoins() {
-    // Wir holen die Zahl aus dem Speicher, falls nichts da ist, starten wir bei 0
-    let total = parseInt(localStorage.getItem('total_coins_v1')) || 0;
-    
-    // Sicherheit-Check (Optional, aber empfohlen):
-    const token = localStorage.getItem('total_coins_token');
-    if (token !== createHash(total)) {
-        console.warn("Coin-Manipulation erkannt!");
-        // Hier könnte man entscheiden, ob man die Coins auf 0 setzt oder ignoriert
-    }
-    return total;
-}
-
-// Funktion zum Hinzufügen von Coins zum Konto
-function addCoinsToAccount(amount) {
-    let currentTotal = getTotalCoins();
-    let newTotal = currentTotal + amount;
-    
-    // Speichern
-    localStorage.setItem('total_coins_v1', newTotal);
-    // Sicherheitstoken aktualisieren
-    localStorage.setItem('total_coins_token', createHash(newTotal));
-}
-
-
-function applecakeisnice() {
-    let currentTotal = getTotalCoins();
-    let newTotal = currentTotal + 5000;
-    
-    // Speichern
-    localStorage.setItem('total_coins_v1', newTotal);
-    // Sicherheitstoken aktualisieren
-    localStorage.setItem('total_coins_token', createHash(newTotal));
-}
 
 function toggleSound() {
     soundEnabled = !soundEnabled;
@@ -111,68 +60,6 @@ function playSound(audioObj) {
     }
 }
 
-// Zeichnet die Liste der Skins in das Shop-Fenster
-function renderShop() {
-    const skinList = document.getElementById('skin-list');
-    if (!skinList) return; // Falls das Element noch nicht da ist
-
-    const ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
-    const activeSkin = localStorage.getItem('equipped_skin') || 'default';
-    
-    skinList.innerHTML = ''; // Liste leeren
-
-    for (const [id, skin] of Object.entries(SKINS)) {
-        const isOwned = ownedSkins.includes(id);
-        const isActive = activeSkin === id;
-
-        skinList.innerHTML += `
-            <div class="shop-item ${isActive ? 'equipped' : ''}">
-                <span>${skin.name} ${!isOwned ? `(${skin.price} 💎)` : ''}</span>
-                ${isOwned 
-                    ? `<button class="shop-btn" onclick="equipSkin('${id}')">${isActive ? 'Aktiv' : 'Nutzen'}</button>`
-                    : `<button class="shop-btn" onclick="buySkin('${id}')">Kaufen</button>`
-                }
-            </div>
-        `;
-    }
-}
-
-// Funktion zum Kaufen
-function buySkin(skinId) {
-    const skin = SKINS[skinId];
-    let currentTotal = getTotalCoins();
-    let ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
-
-    if (currentTotal >= skin.price) {
-        let newTotal = currentTotal - skin.price;
-        localStorage.setItem('total_coins_v1', newTotal);
-        localStorage.setItem('total_coins_token', createHash(newTotal));
-        
-        ownedSkins.push(skinId);
-        localStorage.setItem('owned_skins', JSON.stringify(ownedSkins));
-        
-        renderShop();
-        updateHighscoreDisplay();
-    } else {
-        alert("Nicht genug Kristalle!");
-    }
-}
-
-// Funktion zum Ausrüsten (Wechseln)
-function equipSkin(skinId) {
-    localStorage.setItem('equipped_skin', skinId);
-    loadEquippedSkin();
-    renderShop();
-}
-
-// Lädt den Skin beim Start des Spiels
-function loadEquippedSkin() {
-    const activeSkinId = localStorage.getItem('equipped_skin') || 'default';
-    const playerEl = document.getElementById('player');
-    if (playerEl && SKINS[activeSkinId]) {
-        playerEl.style.backgroundImage = `url('${SKINS[activeSkinId].img}')`;
-    }
-}
 
 
     function updateClock() {
@@ -206,37 +93,6 @@ function updateHighscoreDisplay() {
     // Sicherheits-Warnung in der Konsole
     if (validScores.length !== scores.length) {
         console.warn("Manipulation erkannt!");
-    }
-}
-
-function openShop() {
-    document.getElementById('shop-overlay').style.display = 'block';
-    document.getElementById('shop-balance').innerText = getTotalCoins();
-    renderShop(); // Das hier ist wichtig, damit die Liste erscheint!
-}
-
-function closeShop() {
-    document.getElementById('shop-overlay').style.display = 'none';
-}
-
-
-
-function spendCoins(price) {
-    let currentTotal = getTotalCoins();
-    
-    if (currentTotal >= price) {
-        let newTotal = currentTotal - price;
-        // Neuen Kontostand speichern
-        localStorage.setItem('total_coins_v1', newTotal);
-        // Sicherheitstoken aktualisieren, damit dein Manipulationsschutz nicht meckert
-        localStorage.setItem('total_coins_token', createHash(newTotal));
-        
-        // Die Anzeige im Scoreboard sofort aktualisieren
-        updateHighscoreDisplay();
-        return true; 
-    } else {
-        alert("Nicht genug Kristalle! Sammle mehr im Spiel.");
-        return false; 
     }
 }
 
