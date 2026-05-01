@@ -8,6 +8,35 @@ const SKINS = {
     '7012865092165309812658906523906529106210': { name: 'Gold UFO', price: 500, img: '../assets/gameelements/skins/gold.png' },
 };
 
+const MAPS = {
+    '790ß23170ß712ß07124': { name: 'Moon', price: 0, img: "/assets/gameelements/background.png" },
+    '3247902347902347902': { name: 'Red Mars', price: 150, img: '/assets/gameelements/ui/maps/mars_bg.png' }
+};
+
+const DEFAULT_MAP_ID = '790ß23170ß712ß07124';
+
+function loadEquippedMap() {
+    // 1. Prüfen, wo wir sind
+    const path = window.location.pathname;
+    const page = path.split("/").pop();
+
+    // 2. Nur ausführen, wenn wir NICHT auf der Startseite sind
+    if (page === "index.html" || page === "") {
+        console.log("Map-Wechsel auf Index blockiert.");
+        return; 
+    }
+
+    // 3. Eigentliche Logik zum Ändern des Hintergrunds
+    const activeMapId = localStorage.getItem('equipped_map') || DEFAULT_MAP_ID;
+    if (MAPS[activeMapId]) {
+        document.body.style.backgroundImage = `url('${MAPS[activeMapId].img}')`;
+        document.body.style.backgroundSize = "cover";
+    }
+}
+
+
+
+// --- CORE SYSTEM ---
 function createHash(value) {
     let str = value.toString() + SECRET_KEY;
     let hash = 0;
@@ -19,7 +48,6 @@ function createHash(value) {
 }
 
 function saveCoinsSecurely(amount) {
-    // Speichert die Zahl als unleserlichen Base64-String
     localStorage.setItem('total_coins_v1', btoa(amount.toString()));
     localStorage.setItem('total_coins_token', createHash(amount));
 }
@@ -28,26 +56,22 @@ function getTotalCoins() {
     let encodedValue = localStorage.getItem('total_coins_v1');
     const token = localStorage.getItem('total_coins_token');
     if (!encodedValue) return 0;
-    
     let total;
     try {
         total = parseInt(atob(encodedValue)) || 0;
     } catch(e) { return 0; }
-
-    // Checkt, ob der Hash zur Zahl passt
     if (token !== createHash(total)) {
-        console.error("Manipulation erkannt!");
-        saveCoinsSecurely(0); // Reset
+        saveCoinsSecurely(0);
         return 0;
     }
     return total;
 }
 
 function addCoinsToAccount(amount) {
-    let currentTotal = getTotalCoins();
-    saveCoinsSecurely(currentTotal + amount);
+    saveCoinsSecurely(getTotalCoins() + amount);
 }
 
+// --- SHOP LOGIC ---
 function openShop() {
     const overlay = document.getElementById('shop-overlay');
     if (overlay) {
@@ -70,38 +94,65 @@ function renderShop() {
 
     const ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
     const activeSkin = localStorage.getItem('equipped_skin') || 'default';
+    const ownedMaps = JSON.parse(localStorage.getItem('owned_maps')) || [DEFAULT_MAP_ID];
+    const activeMap = localStorage.getItem('equipped_map') || DEFAULT_MAP_ID;
     
-    skinList.innerHTML = ''; 
-
+    skinList.innerHTML = '<h3>--- SKINS ---</h3>'; 
     for (const [id, skin] of Object.entries(SKINS)) {
-        const isOwned = ownedSkins.includes(id);
-        const isActive = activeSkin === id;
-
-        skinList.innerHTML += `
-            <div class="shop-item ${isActive ? 'equipped' : ''}">
-                <span>${skin.name} ${!isOwned ? `(${skin.price} <img src="/assets/gameelements/ui/Coin.png" style="vertical-align: middle; margin-bottom: 2px; width: 18px;">)` : ''}</span>
-                ${isOwned 
-                    ? `<button class="shop-btn" onclick="equipSkin('${id}')">${isActive ? 'Aktiv' : 'Nutzen'}</button>`
-                    : `<button class="shop-btn" onclick="buySkin('${id}')">Kaufen</button>`
-                }
-            </div>
-        `;
+        const isOwned = ownedSkins.includes(id) || id === 'default';
+        skinList.innerHTML += generateShopItemHTML(id, skin, isOwned, activeSkin === id, 'equipSkin', 'buySkin');
     }
+
+    skinList.innerHTML += '<h3 style="margin-top:20px;">--- MAPS ---</h3>';
+    for (const [id, map] of Object.entries(MAPS)) {
+        const isOwned = ownedMaps.includes(id) || id === DEFAULT_MAP_ID;
+        skinList.innerHTML += generateShopItemHTML(id, map, isOwned, activeMap === id, 'equipMap', 'buyMap');
+    }
+}
+
+function generateShopItemHTML(id, item, isOwned, isActive, equipFunc, buyFunc) {
+    return `
+        <div class="shop-item ${isActive ? 'equipped' : ''}">
+            <span>${item.name} ${!isOwned ? `(${item.price} <img src="/assets/gameelements/ui/Coin.png" style="vertical-align: middle; width: 18px;">)` : ''}</span>
+            ${isOwned 
+                ? `<button class="shop-btn" onclick="${equipFunc}('${id}')">${isActive ? 'Aktiv' : 'Nutzen'}</button>`
+                : `<button class="shop-btn" onclick="${buyFunc}('${id}')">Kaufen</button>`
+            }
+        </div>
+    `;
+}
+
+function buyMap(mapId) {
+    const map = MAPS[mapId];
+    let currentTotal = getTotalCoins();
+    let ownedMaps = JSON.parse(localStorage.getItem('owned_maps')) || [DEFAULT_MAP_ID];
+    if (currentTotal >= map.price) {
+        saveCoinsSecurely(currentTotal - map.price);
+        ownedMaps.push(mapId);
+        localStorage.setItem('owned_maps', JSON.stringify(ownedMaps));
+        renderShop();
+    } else { alert("Nicht genug Kristalle!"); }
+}
+
+function equipMap(mapId) {
+    localStorage.setItem('equipped_map', mapId);
+    
+    // loadEquippedMap prüft jetzt selbst, ob sie den Hintergrund ändern darf
+    loadEquippedMap(); 
+    
+    renderShop();
 }
 
 function buySkin(skinId) {
     const skin = SKINS[skinId];
     let currentTotal = getTotalCoins();
     let ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
-
     if (currentTotal >= skin.price) {
         saveCoinsSecurely(currentTotal - skin.price);
         ownedSkins.push(skinId);
         localStorage.setItem('owned_skins', JSON.stringify(ownedSkins));
         renderShop();
-    } else {
-        alert("Nicht genug Kristalle!");
-    }
+    } else { alert("Nicht genug Kristalle!"); }
 }
 
 function equipSkin(skinId) {
@@ -117,3 +168,20 @@ function loadEquippedSkin() {
         playerEl.style.backgroundImage = `url('${SKINS[activeSkinId].img}')`;
     }
 }
+
+// --- INITIALISIERUNG ---
+function initCosmetics() {
+    const page = window.location.pathname.split("/").pop();
+
+    // Skin wird immer versucht zu laden (falls Player-Div da ist)
+    loadEquippedSkin();
+
+    // Map wird NUR geladen, wenn wir NICHT auf der index.html sind
+    // Falls "page" leer ist (Server-Root), gilt das auch als Startseite
+    if (page !== "index.html" && page !== "") {
+        loadEquippedMap();
+    }
+}
+
+// WICHTIG: Nur dieser eine Aufruf darf hier stehen!
+initCosmetics();

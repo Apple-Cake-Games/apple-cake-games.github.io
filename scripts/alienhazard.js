@@ -274,6 +274,7 @@ function saveScore(newPoints) {
     updateHighscoreDisplay();
     spawnCoin();
     loadEquippedSkin();
+    loadEquippedMap();
     update();
         // Ruft die Funktion alle 15-25 Sekunden auf
     setInterval(() => {

@@ -1,7 +1,8 @@
 const btnplay = document.getElementById("btnPlay");
 const btnGit = document.getElementById("icnGithub");
 const btnShop = document.getElementById("btnShop");
-const btnSettings = document.getElementById("btnSettings")
+const btnSettings = document.getElementById("btnSettings");
+const btnQuit = document.getElementById("btnQuit");
 
 btnplay.addEventListener("click", function(){
 
@@ -41,3 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundBtn = document.getElementById('toggleSound');
     if(soundBtn) soundBtn.innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
 });
+
+btnQuit.addEventListener("click", function(){
+    window.open("https://www.youtube.com/watch?v=Aq5WXmQQooo", "_self")
+})
