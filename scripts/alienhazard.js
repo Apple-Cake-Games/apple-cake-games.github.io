@@ -121,7 +121,7 @@ function spawnShield() {
 
 
 function saveScore(newPoints) {
-    // 1. Highscore-Logik (hast du schon)
+    // 1. Highscores speichern (Top 3)
     let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
     const now = new Date();
     const dateStr = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
@@ -129,15 +129,14 @@ function saveScore(newPoints) {
     const newEntry = { 
         points: newPoints, 
         date: dateStr, 
-        securityToken: createHash(newPoints) 
+        securityToken: createHash(newPoints) // Nutzt den Hash aus economy.js
     };
     
     scores.push(newEntry);
     scores.sort((a, b) => b.points - a.points);
     localStorage.setItem('game_scores_v2', JSON.stringify(scores.slice(0, 3)));
 
-    // 2. NEU: Coins zum globalen Konto hinzufügen
-    // Hier nutzen wir 'score', da das deine gesammelten Kristalle in dieser Runde sind
+    // 2. WICHTIG: Punkte sicher auf das globale Coin-Konto packen
     addCoinsToAccount(newPoints); 
 }
 

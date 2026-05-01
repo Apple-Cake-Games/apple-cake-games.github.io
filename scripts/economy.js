@@ -9,7 +9,7 @@ const SKINS = {
 };
 
 function createHash(value) {
-    let str = value + SECRET_KEY;
+    let str = value.toString() + SECRET_KEY;
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
         hash = ((hash << 5) - hash) + str.charCodeAt(i);
@@ -18,31 +18,40 @@ function createHash(value) {
     return hash.toString();
 }
 
+function saveCoinsSecurely(amount) {
+    // Speichert die Zahl als unleserlichen Base64-String
+    localStorage.setItem('total_coins_v1', btoa(amount.toString()));
+    localStorage.setItem('total_coins_token', createHash(amount));
+}
+
 function getTotalCoins() {
-    let total = parseInt(localStorage.getItem('total_coins_v1')) || 0;
+    let encodedValue = localStorage.getItem('total_coins_v1');
     const token = localStorage.getItem('total_coins_token');
+    if (!encodedValue) return 0;
+    
+    let total;
+    try {
+        total = parseInt(atob(encodedValue)) || 0;
+    } catch(e) { return 0; }
+
+    // Checkt, ob der Hash zur Zahl passt
     if (token !== createHash(total)) {
-        console.warn("Coin-Manipulation erkannt!");
+        console.error("Manipulation erkannt!");
+        saveCoinsSecurely(0); // Reset
+        return 0;
     }
     return total;
 }
 
 function addCoinsToAccount(amount) {
     let currentTotal = getTotalCoins();
-    let newTotal = currentTotal + amount;
-    localStorage.setItem('total_coins_v1', newTotal);
-    localStorage.setItem('total_coins_token', createHash(newTotal));
+    saveCoinsSecurely(currentTotal + amount);
 }
-
-
 
 function openShop() {
     const overlay = document.getElementById('shop-overlay');
-    const balance = document.getElementById('shop-balance');
-    
     if (overlay) {
         overlay.style.display = 'block';
-        if (balance) balance.innerText = getTotalCoins();
         renderShop(); 
     }
 }
@@ -54,7 +63,10 @@ function closeShop() {
 
 function renderShop() {
     const skinList = document.getElementById('skin-list');
+    const balance = document.getElementById('shop-balance');
     if (!skinList) return;
+
+    if (balance) balance.innerText = getTotalCoins();
 
     const ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
     const activeSkin = localStorage.getItem('equipped_skin') || 'default';
@@ -83,16 +95,10 @@ function buySkin(skinId) {
     let ownedSkins = JSON.parse(localStorage.getItem('owned_skins')) || ['default'];
 
     if (currentTotal >= skin.price) {
-        let newTotal = currentTotal - skin.price;
-        localStorage.setItem('total_coins_v1', newTotal);
-        localStorage.setItem('total_coins_token', createHash(newTotal));
-        
+        saveCoinsSecurely(currentTotal - skin.price);
         ownedSkins.push(skinId);
         localStorage.setItem('owned_skins', JSON.stringify(ownedSkins));
-        
         renderShop();
-        
-        if (typeof updateHighscoreDisplay === "function") updateHighscoreDisplay();
     } else {
         alert("Nicht genug Kristalle!");
     }
