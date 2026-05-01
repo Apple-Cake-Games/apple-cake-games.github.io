@@ -12,6 +12,118 @@ body{
     color: white;
 }
 
+        .shop-item.equipped {
+            border: 2px solid #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes coinGlow {
+            0% { filter: drop-shadow(0 0 5px rgb(255, 225, 255)); }
+            50% { filter: drop-shadow(0 0 5px rgb(255, 208, 255)); }
+            100% { filter: drop-shadow(0 0 5px rgb(255, 193, 255)); }
+        }
+
+        /* Kristall: Skaliert auf 40x34px */
+        .coin {
+            position: absolute; 
+            width: 40px; height: 34px;
+            background-image: url("/assets/gameelements/christal_pink.png");
+            background-size: contain;
+            animation: popIn 0.5s ease-out forwards, coinGlow 1.5s infinite ease-in-out;
+        }
+        
+        /* Krater: Skaliert auf 44x44px */
+        .obstacle { 
+            position: absolute; 
+            width: 44px; height: 44px; 
+            background-image: url("/assets/gameelements/crater1.png");
+            background-size: 44px 44px;
+            image-rendering: pixelated;
+        }
+
+
+/* Shop Overlay Hauptcontainer */
+#shop-overlay {
+    display: none; /* Standardmäßig unsichtbar */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    background-color: rgba(0, 0, 0, 0.95);
+    border: 4px solid #ffd700; /* Goldener Rahmen für den Shop */
+    z-index: 2000;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    color: white;
+    box-shadow: 10px 10px 0px rgba(255, 215, 0, 0.2);
+    image-rendering: pixelated;
+}
+
+#shop-overlay h2 {
+    color: #ffd700;
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
+/* Die einzelnen Items im Shop */
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #00d4ff;
+}
+
+.shop-item span {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Buttons im Shop */
+.shop-btn {
+    background: #ffd700;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.shop-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+}
+
+.shop-close-btn {
+    margin-top: 20px;
+    background: transparent;
+    color: #ff004c;
+    border: 2px solid #ff004c;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.shop-close-btn:hover {
+    background: #ff004c;
+    color: #fff;
+}
+
+
 #icnGithub {
     filter: invert();
     position: fixed;   /* Bleibt auch beim Scrollen an der Stelle */
@@ -51,32 +163,115 @@ header h1 {
     line-height: 1.5;
 }
 
-#informationbtn {
-    background-color: #ff4d4d; 
-    color: white;
+#btnPlay {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; 
+    height: 80px;
+    background-image: url("../assets/gameelements/ui/Play.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     border: none;
-    padding: 16px 32px;
-    font-family: sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
+    background-color: transparent;
     cursor: pointer;
-    border-radius: 4px;
-    
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+}
 
-    box-shadow: 0px 6px 0px #b33636; 
-    transition: all 0.1s ease;
+#btnPlay:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
 }
 
 
-#informationbtn:hover {
-    background-color: #ff6666;
-    transform: translateY(2px);
-    box-shadow: 0px 4px 0px #b33636;
+#btnShop {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; 
+    height: 80px;
+    background-image: url("../assets/gameelements/ui/Shop.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+}
+
+#btnShop:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+#btnStats {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; 
+    height: 80px;
+    background-image: url("../assets/gameelements/ui/Stats.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+}
+
+#btnStats:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
 }
 
 
-#informationbtn:active {
-    transform: translateY(6px);
-    box-shadow: 0px 0px 0px #b33636;
+#btnCredits {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; 
+    height: 80px;
+    background-image: url("../assets/gameelements/ui/Credits.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+}
+
+#btnCredits:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+
+#btnQuit {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; 
+    height: 80px;
+    background-image: url("../assets/gameelements/ui/Quit.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+}
+
+#btnQuit:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
 }

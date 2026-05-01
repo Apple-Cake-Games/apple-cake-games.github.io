@@ -1,9 +1,11 @@
 const SECRET_KEY = "AppleCake-Super-Secret-99!879423712890741982074891273489031234789321049128041239847031294012387104239871209712430978";
 
 const SKINS = {
-    'default': { name: 'Standard UFO', price: 0, img: '../assets/gameelements/player.png' },
-    'neon': { name: 'Neon Scout', price: 150, img: '../assets/gameelements/player_neon.png' },
-    'gold': { name: 'Gold Edition', price: 500, img: '../assets/gameelements/player_gold.png' }
+    'default': { name: 'Green Alien', price: 0, img: '../assets/gameelements/player.png' },
+    'red': { name: 'Red Alien', price: 50, img: '../assets/gameelements/skins/red.png' },
+    'pink': { name: 'Pink Alien', price: 100, img: '../assets/gameelements/skins/pink.png' },
+    'void': { name: 'Void UFO', price: 200, img: '../assets/gameelements/skins/void.png' },
+    'gold': { name: 'Gold UFO', price: 500, img: '../assets/gameelements/skins/gold.png' },
 };
 
 function createHash(value) {
