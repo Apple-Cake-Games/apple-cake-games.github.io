@@ -48,7 +48,7 @@ const MAPS = {
     price: 750,
     img: '/assets/gameelements/maps/Green_Fields.png',
     coinImg: '/assets/gameelements/plant_flower.png',
-    obstacleImg: '/assets/gameelements/crater1.png',
+    obstacleImg: '/assets/gameelements/leaf.png',
     coinSound: '/assets/sounds/coin.mp3', // Spezieller Sound für Blumen
   },
 };
