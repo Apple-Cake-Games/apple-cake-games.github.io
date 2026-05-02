@@ -28,11 +28,6 @@
 
 
 
-
-            // Sound-Einstellung aus localStorage laden (Standard ist 'true', falls nichts gespeichert)
-        let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
-
-
     
 
         // Button-Text beim Laden korrekt setzen
@@ -42,23 +37,9 @@
 
 
 
-function toggleSound() {
-    soundEnabled = !soundEnabled;
-    
-    // Speichern im localStorage
-    localStorage.setItem('soundEnabled', soundEnabled);
-    
-    const btn = document.getElementById('toggleSound');
-    btn.innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
-}
 
-// Deine Audio-Funktionen leicht anpassen:
-function playSound(audioObj) {
-    if (soundEnabled) {
-        audioObj.currentTime = 0; // Neustarten falls es mehrmals schnell hintereinander kommt
-        audioObj.play().catch(() => {});
-    }
-}
+
+
 
 
 

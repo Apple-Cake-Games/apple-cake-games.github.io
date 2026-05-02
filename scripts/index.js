@@ -37,19 +37,6 @@ btnSettings.addEventListener("click", function(){
 });
 
 
-let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
-
-function toggleSound() {
-    soundEnabled = !soundEnabled;
-    localStorage.setItem('soundEnabled', soundEnabled);
-    document.getElementById('toggleSound').innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const soundBtn = document.getElementById('toggleSound');
-    if(soundBtn) soundBtn.innerText = soundEnabled ? "Sound: AN" : "Sound: AUS";
-});
-
 btnQuit.addEventListener("click", function(){
     window.open("https://www.youtube.com/watch?v=Aq5WXmQQooo", "_self")
 })

@@ -52,6 +52,59 @@ body{
     color: black;
 }
 
+/* Start-Screen im Alien-Hazard Stil */
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Dunkler Hintergrund mit leichtem Blau-Stich passend zum Weltraum */
+    background: radial-gradient(circle, rgba(0,20,40,1) 0%, rgba(0,0,0,1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    image-rendering: pixelated;
+}
+
+/* Der große Titel oben */
+#start-screen h1 {
+    font-size: 80px;
+    color: white;
+    text-transform: uppercase;
+    /* Nutzt deinen Text-Shadow Stil */
+    text-shadow: 6px 6px #ff00ff;
+    margin-bottom: 10px;
+    /* Nutzt deine vorhandene popIn Animation */
+    animation: popIn 0.8s ease-out forwards;
+}
+
+/* Der blinkende "Click to Start" Text */
+.click-hint {
+    font-size: 24px;
+    color: #ffd700; /* Gold wie dein Shop-Titel */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-top: 30px;
+    /* Ein Pulsieren passend zum Kristall-Glow */
+    animation: coinGlow 1.5s infinite ease-in-out;
+}
+
+/* Ein kleiner grafischer Akzent (optional) */
+.start-icon {
+    width: 80px;
+    height: 68px;
+    background-image: url("/assets/gameelements/christal_pink.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    animation: coinGlow 2s infinite alternate;
+}
+
 
 #shop-overlay {
     display: none; 
