@@ -129,7 +129,13 @@ function createObstacle(x, y) {
   obs.className = 'obstacle';
 
   const mapData = getCurrentMapData();
-  obs.style.backgroundImage = `url('${mapData.obstacleImg}')`;
+
+  // RANDOMIZER: Wählt ein zufälliges Hindernis aus der Liste
+  const randomObsImg =
+    mapData.obstacleImages[
+      Math.floor(Math.random() * mapData.obstacleImages.length)
+    ];
+  obs.style.backgroundImage = `url('${randomObsImg}')`;
 
   obs.style.left = x + 'px';
   obs.style.top = y + 'px';
@@ -143,7 +149,11 @@ function spawnCoin() {
   coin.className = 'coin';
 
   const mapData = getCurrentMapData();
-  coin.style.backgroundImage = `url('${mapData.coinImg}')`;
+
+  // RANDOMIZER: Wählt ein zufälliges Bild aus der Liste
+  const randomCoinImg =
+    mapData.coinImages[Math.floor(Math.random() * mapData.coinImages.length)];
+  coin.style.backgroundImage = `url('${randomCoinImg}')`;
 
   const x = Math.random() * (window.innerWidth - 40);
   const y = Math.random() * (window.innerHeight - 34);
