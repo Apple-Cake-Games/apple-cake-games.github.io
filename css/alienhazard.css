@@ -113,6 +113,14 @@ body {
   }
 }
 
+.coin,
+.obstacle {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Behalte image-rendering: pixelated bei! */
+}
+
 .coin {
   position: absolute;
   width: 40px;

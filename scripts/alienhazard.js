@@ -40,6 +40,12 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+function getCurrentMapData() {
+  const activeMapId =
+    localStorage.getItem('equipped_map') || '790ß23170ß712ß07124';
+  return MAPS[activeMapId] || MAPS['790ß23170ß712ß07124'];
+}
+
 function updateHighscoreDisplay() {
   // 1. Highscores aus dem Speicher laden
   let scores = JSON.parse(localStorage.getItem('game_scores_v2')) || [];
@@ -121,6 +127,10 @@ function saveScore(newPoints) {
 function createObstacle(x, y) {
   const obs = document.createElement('div');
   obs.className = 'obstacle';
+
+  const mapData = getCurrentMapData();
+  obs.style.backgroundImage = `url('${mapData.obstacleImg}')`;
+
   obs.style.left = x + 'px';
   obs.style.top = y + 'px';
   gameContainer.appendChild(obs);
@@ -131,6 +141,10 @@ function spawnCoin() {
   if (gameOver) return;
   const coin = document.createElement('div');
   coin.className = 'coin';
+
+  const mapData = getCurrentMapData();
+  coin.style.backgroundImage = `url('${mapData.coinImg}')`;
+
   const x = Math.random() * (window.innerWidth - 40);
   const y = Math.random() * (window.innerHeight - 34);
   coin.style.left = x + 'px';
@@ -217,13 +231,21 @@ function update() {
   ) {
     score++;
     scoreDisplay.innerText = score;
-    if (speedMultiplier < 2.0) speedMultiplier += 0.02;
+
+    // 1. Daten der aktuellen Map holen
+    const mapData = getCurrentMapData();
+
+    // 2. Den Sound-Pfad aus deiner MAPS-Liste laden
+    const soundToPlay = new Audio(mapData.coinSound);
+
+    // 3. Deine Funktion aus der settings.js aufrufen (prüft automatisch Sound AN/AUS)
+    playSound(soundToPlay);
 
     const x = parseFloat(currentCoin.style.left);
     const y = parseFloat(currentCoin.style.top);
     currentCoin.remove();
     currentCoin = null;
-    playSound(coinSound);
+
     setTimeout(() => {
       createObstacle(x, y);
     }, 500);

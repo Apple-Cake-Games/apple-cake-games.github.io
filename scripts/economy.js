@@ -39,11 +39,17 @@ const MAPS = {
     name: 'Moon',
     price: 0,
     img: '/assets/gameelements/background.png',
+    coinImg: '/assets/gameelements/christal_pink.png',
+    obstacleImg: '/assets/gameelements/crater1.png',
+    coinSound: '/assets/sounds/coin.mp3', // Standard Sound
   },
   '3247902347902347902': {
     name: 'Green Fields',
     price: 750,
-    img: '/assets/gameelements/ui/maps/Green_Fields.png',
+    img: '/assets/gameelements/maps/Green_Fields.png',
+    coinImg: '/assets/gameelements/plant_flower.png',
+    obstacleImg: '/assets/gameelements/crater1.png',
+    coinSound: '/assets/sounds/coin.mp3', // Spezieller Sound für Blumen
   },
 };
 
