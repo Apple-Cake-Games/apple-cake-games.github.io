@@ -1,3 +1,6 @@
+# ==========================================
+# Deine bestehenden Linux- / System-Einträge
+# ==========================================
 *~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
@@ -14,3 +17,30 @@
 
 # Log files created by default by the nohup command
 nohup.out
+
+
+# ==========================================
+# NEU: TypeScript & Node.js Erweiterungen
+# ==========================================
+
+# Blockiert den riesigen Ordner für externe Bibliotheken (wird via 'npm install' generiert)
+node_modules/
+
+# Blockiert die Ordner, in die dein TypeScript-Code fertig kompiliert wird
+dist/
+build/
+out/
+
+# Falls du deine .js Dateien direkt im selben Ordner wie die .ts Dateien generierst,
+# kannst du die generierten JavaScript-Dateien und Source-Maps ignorieren:
+# *.js
+# *.js.map
+
+# Blockiert Log-Dateien von npm, falls mal ein Fehler beim Installieren auftritt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Geheimnisse & Konfigurationen (z. B. falls du Umgebungsvariablen nutzt)
+.env
+.env.local
