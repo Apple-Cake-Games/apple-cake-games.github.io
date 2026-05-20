@@ -19,11 +19,7 @@
     </div>
 
     <div class="information">
-      <button
-        id="btnPlay"
-        onmouseenter="playSound(hoverSound)"
-        onclick="playSound(clickSound)"
-      ></button>
+      <button id="btnPlay" onmouseenter="playSound(hoverSound)"></button>
       <button
         id="btnShop"
         onmouseenter="playSound(hoverSound)"
@@ -107,6 +103,7 @@
     >
       <h2>Options</h2>
       <button id="toggleSound" onclick="toggleSound()">Sound: AN</button>
+      <button id="toggleFence" onclick="toggleFence()">Fence Mode: OFF</button>
       <hr />
       <button
         onclick="closeSettings()"

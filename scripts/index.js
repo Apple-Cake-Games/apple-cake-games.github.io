@@ -4,10 +4,6 @@ const btnShop = document.getElementById('btnShop');
 const btnSettings = document.getElementById('btnSettings');
 const btnQuit = document.getElementById('btnQuit');
 
-btnplay.addEventListener('click', function () {
-  window.open('/html/alienhazard.html', '_self');
-});
-
 btnGit.addEventListener('click', function () {
   window.open('https://github.com/Apple-Cake-Games/apple-cake-games.github.io');
   const hasBonus = localStorage.getItem('bonus_github_claimed');

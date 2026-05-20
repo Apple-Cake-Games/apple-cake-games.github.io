@@ -1,5 +1,5 @@
 // settings.js
-
+let fenceEnabled = localStorage.getItem('fenceEnabled') === 'true';
 // 1. Globaler Sound-Status
 let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
 
@@ -41,7 +41,37 @@ function updateSoundButtonText() {
   }
 }
 
+function toggleFence() {
+  fenceEnabled = !fenceEnabled;
+  localStorage.setItem('fenceEnabled', fenceEnabled);
+  updateFenceButtonText();
+}
+
+function updateFenceButtonText() {
+  const btn = document.getElementById('toggleFence');
+  if (btn) {
+    btn.innerText = fenceEnabled ? 'Fence Mode: ON' : 'Fence Mode: OFF';
+  }
+}
+
+function startSpiel() {
+  playSound(clickSound);
+  setTimeout(() => {
+    if (fenceEnabled) {
+      window.location.href = '/html/fence.html';
+    } else {
+      window.location.href = '/html/alienhazard.html';
+    }
+  }, 100);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  updateFenceButtonText();
+
+  const btnPlay = document.getElementById('btnPlay');
+  if (btnPlay) {
+    btnPlay.addEventListener('click', startSpiel);
+  }
   const startScreen = document.getElementById('start-screen');
 
   if (startScreen) {
