@@ -11,6 +11,27 @@
       <iframe src="alienhazard.html" class="gamebox"></iframe>
       <div class="game-frame"></div>
     </div>
+    <div class="ui">
+      <div id="real-clock">Lädt...</div>
+      Zeit: <span id="timer">0.00</span>s | Punkte: <span id="score">0</span>
+      <hr style="border: 0; border-top: 1px solid #00d4ff; margin: 10px 0" />
+      <b>Highscores:</b>
+      <div id="highscore-list" style="font-size: 0.7em; margin-top: 5px">
+        Lädt...
+      </div>
+      <div
+        style="
+          margin-top: 12px;
+          padding-top: 8px;
+          border-top: 2px dashed #00d4ff;
+          color: #ffd700;
+          font-weight: bold;
+        "
+      >
+        Guthaben: <span id="total-coins-display">0</span>
+        <img src="/assets/gameelements/ui/Coin.png" />
+      </div>
+    </div>
   </body>
   <script>
     window.addEventListener('load', function () {

@@ -44,3 +44,25 @@ body {
   image-rendering: crisp-edges;
   border-radius: 0px;
 }
+
+.ui {
+  display: none;
+  position: fixed;
+  color: #00d4ff;
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 20px 30px;
+  border: 4px solid #00d4ff;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  image-rendering: pixelated;
+  min-width: 280px;
+}
+
+#timer,
+#score {
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px #00d4ff;
+}
