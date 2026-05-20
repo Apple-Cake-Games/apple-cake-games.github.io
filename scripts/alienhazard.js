@@ -304,6 +304,17 @@ function update() {
     }
   });
 
+  // Daten an die übergeordnete Seite (fence.html) senden
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage(
+      {
+        score: score,
+        timer: ((Date.now() - startTime) / 1000).toFixed(2),
+        clock: clockDisplay.innerText,
+      },
+      '*'
+    );
+  }
   requestAnimationFrame(update);
 }
 
