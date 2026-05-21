@@ -14,27 +14,27 @@ const SKINS = {
   },
   '4376891235609812368586089216358902163553': {
     name: 'Pink Alien',
-    price: 100,
+    price: 80,
     img: '../assets/gameelements/skins/pink.gif',
   },
   '7853201750213568126539062130981236508213': {
     name: 'Void',
-    price: 200,
+    price: 100,
     img: '../assets/gameelements/skins/void.gif',
   },
   '7012865092165309812658906523906529106210': {
     name: 'Gold',
-    price: 500,
+    price: 120,
     img: '../assets/gameelements/skins/gold.gif',
   },
   '3521532563242314321543265145315446431135': {
     name: 'Robot',
-    price: 700,
+    price: 150,
     img: '../assets/gameelements/skins/robot.gif',
   },
   '78032790127903678956063210965213902536982': {
     name: 'Warship',
-    price: 1000,
+    price: 200,
     img: '../assets/gameelements/skins/warship.gif',
   },
   '32479023479023479023ß12370ß92134709ß2144': {
