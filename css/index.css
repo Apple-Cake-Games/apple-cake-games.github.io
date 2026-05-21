@@ -5,7 +5,11 @@
 }
 
 body {
-  background-image: url('../assets/gameelements/ui/background.png');
+  background-image: url('../assets/gameelements/ui/background.gif');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  image-rendering: pixelated;
 }
 
 .information {
